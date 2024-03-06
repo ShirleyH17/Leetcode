@@ -3,6 +3,40 @@
 #     def __init__(self, val=0, next=None):
 #         self.val = val
 #         self.next = next
+
+# Recursion solution
+class Solution(object):
+    def reverseBetween(self, head, left, right):
+        """
+        :type head: ListNode
+        :type left: int
+        :type right: int
+        :rtype: ListNode
+        """
+        if left == 1:
+            return self.reverseN(head, right)
+        
+        last = self.reverseBetween(head.next, left-1, right-1)
+        head.next = last
+        return head
+ 
+    
+    def reverseN(self, head, n):
+        global successor
+        if not head or not head.next:
+            return head
+        
+        if n == 1:
+            successor = head.next
+            return head
+
+        last = self.reverseN(head.next, n-1)
+        head.next.next = head
+        head.next = successor
+        return last
+
+
+# Solution 2
 class Solution(object):
     def reverseBetween(self, head, left, right):
         """
